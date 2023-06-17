@@ -4,12 +4,15 @@ import colors from "colors";
 import dotenv from "dotenv";
 import connectdb from "./config/db.js";
 import morgan from "morgan";
+import authRoutes from "./routes/authRoutes.js";
 
 //Configuration
 dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
 
+//Routes
+app.use("/api/v1/auth", authRoutes);
 //DB Connection
 connectdb();
 
