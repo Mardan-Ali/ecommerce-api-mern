@@ -1,0 +1,25 @@
+{
+  "name": "ecommerce-api-mern",
+  "version": "1.0.0",
+  "description": "Ecommerce App built using MERN Stack  by Mardan Ali",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "server": "nodemon server.js"
+  },
+  "keywords": [
+    "Ecommerce",
+    "Store",
+    "Online-shopping"
+  ],
+  "author": "Mardan Ali (Full-Stack Developer)",
+  "license": "MIT",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "dotenv": "^16.3.0",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
