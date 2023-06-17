@@ -10,16 +10,15 @@ import authRoutes from "./routes/authRoutes.js";
 dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
+//Middlewares
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(morgan("dev"));
 
 //Routes
 app.use("/api/v1/auth", authRoutes);
 //DB Connection
 connectdb();
-
-//Middlewares
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(morgan("dev"));
 
 // Test API
 app.get("/", (req, res) => {
