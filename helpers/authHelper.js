@@ -10,3 +10,10 @@ export const hashPassword = (password) => {
 export const comparePassword = async (password, hashedPassword) => {
   return await bcrypt.compare(password, hashedPassword);
 };
+
+// const result = await comparePassword(
+//   "haider12345",
+//   "$2b$10$odgbiwbjfBlxH3Okk4Qr2eIAH7HwmzlgcgoDmCGOQngBpJu0SPL7a"
+// );
+
+// console.log(result);

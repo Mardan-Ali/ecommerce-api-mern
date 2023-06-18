@@ -1,7 +1,7 @@
-import { hashPassword } from "../helpers/authHelper.js";
+import { comparePassword, hashPassword } from "../helpers/authHelper.js";
 import UserModel from "../models/UserModel.js";
-
-// | POST /api/v1/auth/register
+import jwt from "jsonwebtoken";
+// |1: POST /api/v1/auth/register
 export const registerContoller = async (req, res) => {
   try {
     const { name, email, password, phone, address } = req.body;
@@ -44,6 +44,62 @@ export const registerContoller = async (req, res) => {
       success: false,
       message: "Error in registering",
       error,
+    });
+  }
+};
+
+// |2: POST /api/v1/auth/login
+export const loginController = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    // console.log(password);
+
+    if (!email || !password) {
+      return res.status(404).send({
+        success: false,
+        message: "Please enter your email addres and Password",
+      });
+    }
+    // Check if the user registered
+    const user = await UserModel.findOne({ email });
+    // console.log(user);
+    // console.log("Now PASSWORD", user.password);
+    if (!user) {
+      return res
+        .status(404)
+        .send({ success: false, message: "User is not registered" });
+    }
+    // Check password is correct
+    const confirmpassword = await comparePassword(password, user.password);
+    // console.log(confirmpassword);
+
+    if (!confirmpassword) {
+      return res
+        .status(404)
+        .send({ success: false, message: "Password is incorrect" });
+    }
+    //token
+    const token = await jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "7d",
+    });
+
+    res.status(201).send({
+      success: true,
+      message: "User Logged in successfully",
+      user: {
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        address: user.address,
+      },
+      token,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error in Login Controler",
+      error: error,
     });
   }
 };
