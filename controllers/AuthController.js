@@ -103,3 +103,8 @@ export const loginController = async (req, res) => {
     });
   }
 };
+
+// 3: GET /api/v1/auth/test
+export const testController = async (req, res) => {
+  res.send("Protected Route Acccessed");
+};
